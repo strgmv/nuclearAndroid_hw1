@@ -30,8 +30,23 @@ class ActivityA : AppCompatActivity() {
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
-        btnOpenFragmentB.setOnClickListener {
 
+        btnOpenFragmentB.setOnClickListener {
+            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                val fragmentContainer = findViewById<FrameLayout>(R.id.fragmentContainer)
+                fragmentContainer.visibility = View.VISIBLE
+
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, FragmentBA())
+                    .addToBackStack(null)
+                    .commit()
+            } else {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainerA, FragmentBA())
+                    .replace(R.id.fragmentContainerB, FragmentBB())
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
     }
 }
