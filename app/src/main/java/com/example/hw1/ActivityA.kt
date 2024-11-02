@@ -3,6 +3,7 @@ package com.example.hw1
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
@@ -16,6 +17,7 @@ class ActivityA : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        Log.d("ActivityA", taskId.toString())
         setContentView(R.layout.activity_a)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -27,26 +29,19 @@ class ActivityA : AppCompatActivity() {
 
         btnOpenActivityB.setOnClickListener {
             val intent = Intent(this, ActivityB::class.java)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
 
         btnOpenFragmentB.setOnClickListener {
-            if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                val fragmentContainer = findViewById<FrameLayout>(R.id.fragmentContainer)
-                fragmentContainer.visibility = View.VISIBLE
-
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, FragmentBA())
-                    .addToBackStack(null)
-                    .commit()
-            } else {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainerA, FragmentBA())
-                    .replace(R.id.fragmentContainerB, FragmentBB())
-                    .addToBackStack(null)
-                    .commit()
-            }
+            val intent = Intent(this, ActivityFragment::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
         }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        Log.d("ActivityA", "New intent")
     }
 }

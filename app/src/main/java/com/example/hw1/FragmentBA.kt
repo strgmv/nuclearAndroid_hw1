@@ -15,10 +15,9 @@ class FragmentBA : Fragment(R.layout.fragment_b_a) {
         super.onViewCreated(view, savedInstanceState)
 
         val btnOpenFragmentBB = view.findViewById<Button>(R.id.btnOpenFragmentBB)
-
         btnOpenFragmentBB?.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, FragmentBB())
+                .replace(R.id.fragment_container_view, FragmentBB())
                 .addToBackStack(null)
                 .commit()
         }

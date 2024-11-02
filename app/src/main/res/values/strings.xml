@@ -11,4 +11,5 @@
     <string name="open_fragment_bb">Open Fragment BB</string>
     <string name="title_fragmentbb">FragmentBB</string>
     <string name="send_color">Send Color</string>
+    <string name="title_activity_fragment">ActivityFragment</string>
 </resources>
